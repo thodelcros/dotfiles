@@ -11,32 +11,28 @@
 
 [core]
   pager = less -FRSX
-	editor = '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl' -n -w
+	editor = code --wait
 
 [alias]
   co = checkout
   st = status -sb
   br = branch
-  ci = commit
   fo = fetch origin
   d = !git --no-pager diff
   dt  = difftool
   stat = !git --no-pager diff --stat
 
-  # Clean merged branches
-  sweep = !git branch --merged master | grep -v 'master$' | xargs git branch -d && git remote prune origin
-
-  # http://www.jukie.net/bart/blog/pimping-out-git-log
   lg = log --graph --all --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)%an%Creset %C(yellow)%d%Creset'
-
-  # Serve local repo. http://coderwall.com/p/eybtga
-  # Then other can access via `git clone git://#{YOUR_IP_ADDRESS}/
-  serve = !git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
-
-  m = checkout master
 
   # Removes a file from the index
   unstage = reset HEAD --
+
+  # Own aliases
+  today = log --since=00:00:00 --all --no-merges --author='Thomas Delcros' --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %C(green)(%cr) %C(bold blue)<%an>%Creset'
+  see = diff-tree --no-commit-id --name-only -r
+  forgot = commit -v --amend --no-edit --all
+
+
 
 [help]
   autocorrect = 1
@@ -46,11 +42,19 @@
 
 [branch "master"]
   mergeoptions = --no-edit
+
 [user]
 	email = delcrosthomas@gmail.com
 	name = Thomas Delcros
+	signingkey = 3FEEB92F51DBBE3B
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+[diff]
+  tool = default-difftool
+
+[difftool "default-difftool"]
+    cmd = code --wait --diff $LOCAL $REMOTE

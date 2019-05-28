@@ -5,3 +5,11 @@ alias speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/download
 
 # Quickly serve the current directory as HTTP
 alias serve='ruby -run -e httpd . -p 8000'  # Or python -m SimpleHTTPServer :)
+
+# Get access to recurrent directory
+alias theseis='~/code/thetribe/theseis-e-rip'
+alias zshrc='${=EDITOR} ~/.zshrc'
+
+
+# Clear merged branches
+alias sweep="git branch --merged | egrep -v '(^\*|master|develop)' | xargs git branch -d"
